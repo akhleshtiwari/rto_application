@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rto_application/Utils/app_bar.dart';
 import 'package:rto_application/Utils/custom_radio.dart';
-import 'package:rto_application/Utils/text.dart';
 
 class PracticeQuestion extends StatelessWidget {
   const PracticeQuestion({super.key});
@@ -8,12 +8,7 @@ class PracticeQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: textYellow(
-          "Practice",
-        ),
-        backgroundColor: const Color.fromARGB(255, 255, 105, 5),
-      ),
+      appBar: appBar("Practice"),
       backgroundColor: Colors.yellow,
       body: ListView.builder(
         itemCount: 1,

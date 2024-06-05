@@ -24,13 +24,13 @@ class ExamModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['question'] = this.question;
-    data['option_1'] = this.option1;
-    data['option_2'] = this.option2;
-    data['option_3'] = this.option3;
-    data['answer'] = this.answer;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['question'] = question;
+    data['option_1'] = option1;
+    data['option_2'] = option2;
+    data['option_3'] = option3;
+    data['answer'] = answer;
     return data;
   }
 }

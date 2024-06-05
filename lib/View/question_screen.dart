@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rto_application/Model/exam_question_list.dart';
+import 'package:rto_application/Utils/app_bar.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key});
@@ -13,17 +13,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.yellow,
-      appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "RTO EXAM",
-            style: TextStyle(
-              color: Colors.yellow,
-            ),
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 255, 105, 5),
-      ),
+      appBar: appBar("RTO EXAM"),
       body: ListView.builder(
         itemCount: 1,
         itemBuilder: (context, index) => const Card(

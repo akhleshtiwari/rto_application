@@ -6,7 +6,7 @@ Widget customRadio(String answer) {
       answer,
     ),
     value: 1,
-    groupValue: [],
+    groupValue: const [],
     onChanged: (value) {},
   );
 }
