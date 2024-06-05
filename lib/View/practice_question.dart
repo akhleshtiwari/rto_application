@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rto_application/Utils/custom_radio.dart';
+import 'package:rto_application/Utils/text.dart';
 
 class PracticeQuestion extends StatelessWidget {
   const PracticeQuestion({super.key});
@@ -7,18 +9,17 @@ class PracticeQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: textYellow(
           "Practice",
-          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color.fromARGB(255, 255, 105, 5),
       ),
       backgroundColor: Colors.yellow,
       body: ListView.builder(
         itemCount: 1,
-        itemBuilder: (context, index) => const Column(
+        itemBuilder: (context, index) => Column(
           children: [
-            Card(
+            const Card(
               child: ListTile(
                 title: Center(
                   child: Text(
@@ -32,11 +33,10 @@ class PracticeQuestion extends StatelessWidget {
               child: ListTile(
                 title: Column(
                   children: [
-                    Text(
-                      "all optional answer",
-                    ),
-                    Text("all optional answer"),
-                    Text("all optional answer")
+                    customRadio("1st answer"),
+                    customRadio("2nd answer"),
+                    customRadio("3rd answer"),
+                    customRadio("4th answer"),
                   ],
                 ),
               ),

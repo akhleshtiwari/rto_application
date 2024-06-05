@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.yellow,
         appBar: AppBar(
           title: Center(
-            child: textYello("RTO EXAM"),
+            child: textYellow("RTO EXAM",),
           ),
           backgroundColor: const Color.fromARGB(255, 255, 105, 5),
         ),
@@ -38,38 +38,38 @@ class HomePage extends StatelessWidget {
               child: ListTile(
                 leading: const Icon(Icons.note),
                 title: const Text("Practice"),
-                subtitle: const Text("Test your Knowledge and prepare for the exam."),
+                subtitle:
+                    const Text("Test your Knowledge and prepare for the exam."),
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PracticeQuestion()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PracticeQuestion(),
+                    ),
+                  );
                 },
               ),
             ),
-           cuustomCard(context, "Exam")
+            Card(
+              shape: const BeveledRectangleBorder(),
+              child: ListTile(
+                leading: const Icon(Icons.note_add),
+                title: const Text("Practice"),
+                subtitle:
+                    const Text("Start your Test and show your knowledge."),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QuestionScreen(),
+                    ),
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),
     );
-  }
-
-  Widget cuustomCard(BuildContext context,String title){
-    return  Card(
-      shape: const BeveledRectangleBorder(),
-      child: ListTile(
-        leading: const Icon(Icons.note_add),
-        title: Text(title),
-        subtitle: const Text("Start your Test and show your knowledge."),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const QuestionScreen(),
-            ),
-          );
-        },
-      ),
-    ) ;
   }
 }
