@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:rto_application/Model/exam_question_list.dart';
 import 'package:rto_application/Utils/app_bar.dart';
+import 'package:http/http.dart' as http;
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key});
@@ -9,6 +13,8 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
+  final List<ExamModel> _examList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
