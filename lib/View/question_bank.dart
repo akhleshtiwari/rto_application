@@ -1,8 +1,40 @@
-import 'package:flutter/material.dart';
-import 'package:rto_application/Utils/text.dart';
+import 'dart:convert';
 
-class QuestionBank extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:rto_application/Model/exam_question_list.dart';
+import 'package:rto_application/Utils/text.dart';
+import 'package:http/http.dart' as http;
+
+class QuestionBank extends StatefulWidget {
   const QuestionBank({super.key});
+
+  @override
+  State<QuestionBank> createState() => _QuestionBankState();
+}
+
+class _QuestionBankState extends State<QuestionBank> {
+  late List<ExamModel> questions;
+
+  Future<List<ExamModel>> fetchQuestions() async {
+    final response = await http.get(Uri.parse(
+        'http://mapi.trycatchtech.com/v1/rto/practice_question_list'));
+    var questionData = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      for (Map<String, dynamic> i in questionData) {
+        questions.add(ExamModel.fromJson(i));
+      }
+      return questions;
+    } else {
+      return questions = [];
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchQuestions();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +56,29 @@ class QuestionBank extends StatelessWidget {
         backgroundColor: Colors.yellow,
         body: TabBarView(
           children: [
-            ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) => const Card(
-                child: ListTile(
-                  title: Text(
-                    "single questions",
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 25),
-                  ),
-                  subtitle: Text(
-                    "the correct answer",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
+            Builder(builder: (context) {
+              return ListView.builder(
+                itemCount: questions.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        questions[index].question.toString(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 25),
+                      ),
+                      subtitle: Text(
+                        questions[index].option3.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ),
+                  );
+                },
+              );
+            }),
             ListView.builder(
               itemCount: 1,
               itemBuilder: (context, index) => const Padding(

@@ -13,8 +13,6 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  final List<ExamModel> _examList = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
