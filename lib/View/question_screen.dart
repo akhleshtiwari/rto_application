@@ -14,6 +14,8 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   final List<PracticeModel> practice_list = [];
+  late PageController _pageController;
+  int _currentIndex = 0;
 
   Future<List<PracticeModel>> fetchPractice() async {
     final practiceData = await http.get(Uri.parse(
@@ -33,52 +35,61 @@ class _QuestionScreenState extends State<QuestionScreen> {
   void initState() {
     fetchPractice();
     super.initState();
-    setState(() {});
+    _pageController = PageController();
+  }
+
+  void _nextPage() {
+    if (_currentIndex < practice_list.length - 1) {
+      _currentIndex++;
+      _pageController.animateToPage(
+        _currentIndex,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Center(
-        child: ElevatedButton(
-          onPressed: () {},
-          child: Text(
-            "NEXT",
-            style: TextStyle(fontSize: 30, color: Colors.white),
-          ),
-          style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.green)),
-        ),
-      ),
       backgroundColor: Colors.yellow,
       appBar: appBar("RTO EXAM"),
-      body: ListView.builder(
-        itemCount: practice_list.length,
-        itemBuilder: (context, index) => Card(
-          child: ListTile(
-            title: Column(
-              children: [
-                Text(
-                  practice_list[index].question.toString(),
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: practice_list.length,
+              itemBuilder: (context, index) => Card(
+                child: ListTile(
+                  title: Column(
+                    children: [
+                      Text(
+                        practice_list[index].question.toString(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 30),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      customRadio(practice_list[index].option1.toString()),
+                      customRadio(practice_list[index].option2.toString()),
+                      customRadio(practice_list[index].option3.toString()),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        "Your Answer",
+                        style: TextStyle(color: Colors.red),
+                      )
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                customRadio("option 1"),
-                customRadio("option 2"),
-                customRadio("option 3"),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  "Your Answer",
-                  style: TextStyle(color: Colors.red),
-                )
-              ],
+              ),
             ),
           ),
-        ),
+          ElevatedButton(onPressed: _nextPage, child: Text("Next"))
+        ],
       ),
     );
   }

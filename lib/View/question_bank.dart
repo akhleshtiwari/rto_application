@@ -104,21 +104,22 @@ class _QuestionBankState extends State<QuestionBank> {
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
-                      shape: const BeveledRectangleBorder(),
-                      child: ListTile(
-                        leading: Image.network(
-                          images[index].image.toString(),
-                          scale: 1.0,
+                    shape: const BeveledRectangleBorder(),
+                    child: ListTile(
+                      leading: Image.network(
+                        images[index].image.toString(),
+                        scale: 1.0,
+                      ),
+                      title: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          images[index].name.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 20),
                         ),
-                        title: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            images[index].name.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 20),
-                          ),
-                        ),
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
               )
             ],
