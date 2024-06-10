@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
 import 'package:rto_application/Model/exam_practice_model.dart';
 import 'package:rto_application/Utils/app_bar.dart';
 import 'package:rto_application/Utils/custom_radio.dart';
@@ -14,8 +15,8 @@ class PracticeQuestion extends StatefulWidget {
 }
 
 class _PracticeQuestionState extends State<PracticeQuestion> {
-  // ignore: non_constant_identifier_names
-  final List<PracticeModel> practice_list = [];
+  final List<PracticeModel> practiceList = [];
+  late PageController _pageController;
 
   Future<List<PracticeModel>> fetchPractice() async {
     final practiceData = await http.get(Uri.parse(
@@ -23,18 +24,23 @@ class _PracticeQuestionState extends State<PracticeQuestion> {
     var practiceDatas = jsonDecode(practiceData.body.toString());
     if (practiceData.statusCode == 200) {
       for (Map<String, dynamic> prData in practiceDatas) {
-        practice_list.add(PracticeModel.fromJson(prData));
+        practiceList.add(PracticeModel.fromJson(prData));
       }
-      return practice_list;
+      return practiceList;
     } else {
-      return practice_list;
+      return practiceList;
     }
   }
 
   @override
   void initState() {
-    fetchPractice();
     super.initState();
+    _pageController = PageController();
+    fetchPracticeData();
+  }
+
+  Future<void> fetchPracticeData() async {
+    await fetchPractice();
     setState(() {});
   }
 
@@ -44,35 +50,62 @@ class _PracticeQuestionState extends State<PracticeQuestion> {
       child: Scaffold(
         appBar: appBar("Practice"),
         backgroundColor: Colors.yellow,
-        body: ListView.builder(
-          itemCount: practice_list.length,
-          itemBuilder: (context, index) => Column(
-            children: [
-              Card(
-                child: ListTile(
-                  title: Center(
-                    child: Text(
-                      practice_list[index].question.toString(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500, fontSize: 20),
+        body: practiceList.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: practiceList.length,
+                      itemBuilder: (context, index) => Column(
+                        children: [
+                          Card(
+                            margin: const EdgeInsets.all(10),
+                            child: ListTile(
+                              title: Center(
+                                child: Text(
+                                  practiceList[index].question.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Card(
+                            margin: const EdgeInsets.all(10),
+                            child: ListTile(
+                              title: Column(
+                                children: [
+                                  customRadio(
+                                      practiceList[index].option1.toString()),
+                                  customRadio(
+                                      practiceList[index].option2.toString()),
+                                  customRadio(
+                                      practiceList[index].option3.toString()),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Column(
-                    children: [
-                      customRadio(practice_list[index].option1.toString()),
-                      customRadio(practice_list[index].option2.toString()),
-                      customRadio(practice_list[index].option3.toString()),
-                    ],
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 200),
+                    child: Text(
+                      "Swipe Right To Next",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 4, 90, 7),
+                        fontSize: 30,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
       ),
     );
   }

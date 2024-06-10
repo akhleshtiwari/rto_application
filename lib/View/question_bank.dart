@@ -50,8 +50,13 @@ class _QuestionBankState extends State<QuestionBank> {
   @override
   void initState() {
     super.initState();
-    fetchQuestions();
-    fetchImages();
+
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    await fetchQuestions();
+    await fetchImages();
     setState(() {});
   }
 
@@ -74,56 +79,70 @@ class _QuestionBankState extends State<QuestionBank> {
             ]),
           ),
           backgroundColor: Colors.yellow,
-          body: TabBarView(
-            children: [
-              Builder(builder: (context) {
-                return ListView.builder(
-                  itemCount: questions.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(
-                          questions[index].question.toString(),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 25),
-                        ),
-                        subtitle: Text(
-                          questions[index].answer.toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
+          body: questions.isEmpty || images.isEmpty
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : TabBarView(
+                  children: [
+                    Builder(builder: (context) {
+                      return ListView.builder(
+                        itemCount: questions.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            margin: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              title: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  questions[index].question.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.black),
+                                ),
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  questions[index].answer.toString(),
+                                  style: const TextStyle(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 15,
+                                      color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }),
+                    ListView.builder(
+                      itemCount: images.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: const BeveledRectangleBorder(),
+                          child: ListTile(
+                            leading: Image.network(
+                              images[index].image.toString(),
+                              scale: 1.0,
+                            ),
+                            title: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                images[index].name.toString(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 20),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    );
-                  },
-                );
-              }),
-              ListView.builder(
-                itemCount: images.length,
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    shape: const BeveledRectangleBorder(),
-                    child: ListTile(
-                      leading: Image.network(
-                        images[index].image.toString(),
-                        scale: 1.0,
-                      ),
-                      title: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          images[index].name.toString(),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 20),
-                        ),
-                      ),
-                    ),
-                  ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
         ),
       ),
     );

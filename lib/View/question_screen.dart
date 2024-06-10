@@ -13,7 +13,7 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  final List<PracticeModel> practice_list = [];
+  final List<PracticeModel> practiceLists = [];
   late PageController _pageController;
   int _currentIndex = 0;
 
@@ -23,11 +23,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
     var practiceDatas = jsonDecode(practiceData.body.toString());
     if (practiceData.statusCode == 200) {
       for (Map<String, dynamic> prData in practiceDatas) {
-        practice_list.add(PracticeModel.fromJson(prData));
+        practiceLists.add(PracticeModel.fromJson(prData));
       }
-      return practice_list;
+      return practiceLists;
     } else {
-      return practice_list;
+      return practiceLists;
     }
   }
 
@@ -36,14 +36,21 @@ class _QuestionScreenState extends State<QuestionScreen> {
     fetchPractice();
     super.initState();
     _pageController = PageController();
+    fetchD();
+  }
+
+  Future<void> fetchD() async {
+    await fetchPractice();
+
+    setState(() {});
   }
 
   void _nextPage() {
-    if (_currentIndex < practice_list.length - 1) {
+    if (_currentIndex < practiceLists.length - 1) {
       _currentIndex++;
       _pageController.animateToPage(
         _currentIndex,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
       );
     }
@@ -54,43 +61,57 @@ class _QuestionScreenState extends State<QuestionScreen> {
     return Scaffold(
       backgroundColor: Colors.yellow,
       appBar: appBar("RTO EXAM"),
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: practice_list.length,
-              itemBuilder: (context, index) => Card(
-                child: ListTile(
-                  title: Column(
-                    children: [
-                      Text(
-                        practice_list[index].question.toString(),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 30),
+      body: practiceLists.isEmpty
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: practiceLists.length,
+                    itemBuilder: (context, index) => Card(
+                      margin: const EdgeInsets.fromLTRB(15, 50, 15, 300),
+                      child: ListTile(
+                        title: Column(
+                          children: [
+                            Text(
+                              practiceLists[index].question.toString(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 15),
+                            ),
+                            customRadio(
+                                practiceLists[index].option1.toString()),
+                            customRadio(
+                                practiceLists[index].option2.toString()),
+                            customRadio(
+                                practiceLists[index].option3.toString()),
+                          ],
+                        ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      customRadio(practice_list[index].option1.toString()),
-                      customRadio(practice_list[index].option2.toString()),
-                      customRadio(practice_list[index].option3.toString()),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        "Your Answer",
-                        style: TextStyle(color: Colors.red),
-                      )
-                    ],
+                    ),
                   ),
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: _nextPage,
+                  style: ButtonStyle(
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    backgroundColor: const MaterialStatePropertyAll(
+                      Color.fromARGB(255, 1, 107, 1),
+                    ),
+                  ),
+                  child: const Text(
+                    "NEXT",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              ],
             ),
-          ),
-          ElevatedButton(onPressed: _nextPage, child: Text("Next"))
-        ],
-      ),
     );
   }
 }
