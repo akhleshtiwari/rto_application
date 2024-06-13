@@ -68,15 +68,19 @@ class _QuestionBankState extends State<QuestionBank> {
         child: Scaffold(
           appBar: AppBar(
             title: textYellow("QuestionBank"),
-            backgroundColor: const Color.fromARGB(255, 255, 105, 5),
-            bottom: const TabBar(tabs: [
-              Tab(
-                text: "QUESTIONS",
-              ),
-              Tab(
-                text: "TRAFFIC SIGNS",
-              )
-            ]),
+            backgroundColor: const Color.fromARGB(255, 209, 53, 53),
+            bottom: const TabBar(
+                labelColor: Colors.white,
+                indicatorColor: Colors.white,
+                unselectedLabelColor: Color.fromARGB(110, 255, 255, 255),
+                tabs: [
+                  Tab(
+                    text: "QUESTIONS",
+                  ),
+                  Tab(
+                    text: "TRAFFIC SIGNS",
+                  )
+                ]),
           ),
           backgroundColor: Colors.yellow,
           body: questions.isEmpty || images.isEmpty
@@ -90,14 +94,17 @@ class _QuestionBankState extends State<QuestionBank> {
                         itemCount: questions.length,
                         itemBuilder: (context, index) {
                           return Card(
-                            margin: const EdgeInsets.all(8.0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: const BorderSide(color: Colors.black)),
+                            color: const Color.fromARGB(244, 255, 255, 255),
                             child: ListTile(
                               title: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   questions[index].question.toString(),
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w900,
                                       fontSize: 18,
                                       color: Colors.black),
                                 ),
@@ -108,8 +115,8 @@ class _QuestionBankState extends State<QuestionBank> {
                                   questions[index].answer.toString(),
                                   style: const TextStyle(
                                       fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
                                       color: Colors.black),
                                 ),
                               ),
@@ -123,6 +130,7 @@ class _QuestionBankState extends State<QuestionBank> {
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Card(
+                          color: const Color.fromARGB(244, 255, 255, 255),
                           shape: const BeveledRectangleBorder(),
                           child: ListTile(
                             leading: Image.network(
@@ -134,7 +142,7 @@ class _QuestionBankState extends State<QuestionBank> {
                               child: Text(
                                 images[index].name.toString(),
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 20),
+                                    fontWeight: FontWeight.w600, fontSize: 20),
                               ),
                             ),
                           ),

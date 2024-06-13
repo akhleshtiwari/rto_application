@@ -15,6 +15,8 @@ class PracticeQuestion extends StatefulWidget {
 }
 
 class _PracticeQuestionState extends State<PracticeQuestion> {
+  String? selectedValue;
+  var rbutton = true;
   final List<PracticeModel> practiceList = [];
   late PageController _pageController;
 
@@ -63,29 +65,43 @@ class _PracticeQuestionState extends State<PracticeQuestion> {
                       itemBuilder: (context, index) => Column(
                         children: [
                           Card(
-                            margin: const EdgeInsets.all(10),
+                            color: const Color.fromARGB(244, 255, 255, 255),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: const BorderSide(color: Colors.black)),
                             child: ListTile(
                               title: Center(
                                 child: Text(
                                   practiceList[index].question.toString(),
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w900,
                                       fontSize: 18),
                                 ),
                               ),
                             ),
                           ),
                           Card(
-                            margin: const EdgeInsets.all(10),
+                            color: const Color.fromARGB(244, 255, 255, 255),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: const BorderSide(color: Colors.black)),
                             child: ListTile(
                               title: Column(
                                 children: [
+                                  // GestureDetector(
+                                  //   onTap: () {
+                                  //     setState(() {
+                                  //       rbutton = rbutton ? false : true;
+                                  //     });
+                                  //     print('rbut$rbutton');
+                                  //   },
+                                  //   child: Icon(!rbutton
+                                  //       ? Icons.radio_button_off
+                                  //       : Icons.radio_button_checked),
+                                  // ),
                                   customRadio(
-                                      practiceList[index].option1.toString()),
-                                  customRadio(
-                                      practiceList[index].option2.toString()),
-                                  customRadio(
-                                      practiceList[index].option3.toString()),
+                                    practiceList[index].option1.toString(),
+                                  ),
                                 ],
                               ),
                             ),
@@ -99,9 +115,9 @@ class _PracticeQuestionState extends State<PracticeQuestion> {
                     child: Text(
                       "Swipe Right To Next",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 4, 90, 7),
-                        fontSize: 30,
-                      ),
+                          color: Color.fromARGB(255, 4, 90, 7),
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],

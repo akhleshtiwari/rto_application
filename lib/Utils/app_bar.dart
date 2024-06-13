@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 PreferredSizeWidget appBar(String text) {
   return AppBar(
-    title: Center(
+    flexibleSpace: Center(
       child: Text(
         text,
         style: const TextStyle(
-          color: Colors.yellow,
+          fontSize: 25,
+          color: Color.fromARGB(255, 255, 255, 255),
         ),
       ),
     ),
-    backgroundColor: const Color.fromARGB(255, 255, 105, 5),
+    backgroundColor: const Color.fromARGB(255, 209, 53, 53),
   );
 }

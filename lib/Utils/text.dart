@@ -5,6 +5,6 @@ Widget textYellow(
 ) {
   return Text(
     text,
-    style: const TextStyle(color: Colors.yellow),
+    style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
   );
 }

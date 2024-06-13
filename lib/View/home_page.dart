@@ -5,7 +5,6 @@ import 'package:rto_application/View/practice_question.dart';
 import 'package:rto_application/View/question_bank.dart';
 import 'package:rto_application/View/question_screen.dart';
 
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -18,23 +17,29 @@ class HomePage extends StatelessWidget {
         body: ListView(
           children: [
             customCard(
-                context,
-                const Icon(Icons.note),
-                "Question Bank",
-                "List of Question and Answer and meaning of road signs",
-                const QuestionBank()),
+              context,
+              const Icon(Icons.note),
+              "Question Bank",
+              "List of Question and Answer and meaning of road signs",
+              const QuestionBank(),
+              const Color.fromARGB(244, 255, 255, 255),
+            ),
             customCard(
-                context,
-                const Icon(Icons.book),
-                "Practice",
-                "Test your knowledge and prepare for the exam",
-                const PracticeQuestion()),
+              context,
+              const Icon(Icons.book),
+              "Practice",
+              "Test your knowledge and prepare for the exam",
+              const PracticeQuestion(),
+              const Color.fromARGB(244, 255, 255, 255),
+            ),
             customCard(
-                context,
-                const Icon(Icons.note_add_outlined),
-                "Exam",
-                "Start Your Test and show your knowledge",
-                const QuestionScreen())
+              context,
+              const Icon(Icons.note_add_outlined),
+              "Exam",
+              "Start Your Test and show your knowledge",
+              const QuestionScreen(),
+              const Color.fromARGB(244, 255, 255, 255),
+            )
           ],
         ),
       ),

@@ -33,7 +33,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   @override
   void initState() {
-    fetchPractice();
     super.initState();
     _pageController = PageController();
     fetchD();
@@ -72,14 +71,24 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     controller: _pageController,
                     itemCount: practiceLists.length,
                     itemBuilder: (context, index) => Card(
-                      margin: const EdgeInsets.fromLTRB(15, 50, 15, 300),
+                      color: const Color.fromARGB(244, 255, 255, 255),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: const BorderSide(color: Colors.black)),
                       child: ListTile(
                         title: Column(
                           children: [
                             Text(
+                              "Question${index + 1} of ${practiceLists.length.toString()}",
+                              style: const TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18),
+                            ),
+                            Text(
                               practiceLists[index].question.toString(),
                               style: const TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 15),
+                                  fontWeight: FontWeight.w900, fontSize: 18),
                             ),
                             customRadio(
                                 practiceLists[index].option1.toString()),
